@@ -24,7 +24,8 @@ intT getHugeLcm(intT n) {
 
         // gcd is up to 30% slower than __gcd
         /* lcmm = (i*lcmm)/std::gcd(i, lcmm); */
-        lcmm = (i*lcmm)/std::__gcd(i, lcmm);
+        /* lcmm = (i*lcmm)/std::__gcd(i, lcmm); */
+        lcmm = i*(lcmm/std::__gcd(i, lcmm));
     }
     return lcmm;
 }

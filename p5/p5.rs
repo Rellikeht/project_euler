@@ -7,7 +7,9 @@ pub fn primes(n: usize) -> Vec<Numt> {
 
     // This probably up to sqrt of n
     // And should be in main loop
-    let mut prs = Vec::with_capacity((Numt::ilog2(n as Numt)*2+1) as usize);
+
+    let cap = (8*n)/(Numt::ilog2(n as Numt)*5) as usize;
+    let mut prs = Vec::with_capacity(cap);
 
     let n = n+1;
     let mut sieve = Vec::with_capacity(n);
@@ -34,6 +36,8 @@ pub fn primes(n: usize) -> Vec<Numt> {
     for i in (i..n).step_by(2) {
         if sieve[i] { prs.push(i as Numt); }
     }
+
+    // println!("{} {}\n", cap, prs.len());
     return prs;
 }
 

@@ -1,0 +1,4 @@
+C++ needs script for g++ -o name name.cpp
+
+Static linking:
+rustc -C opt_level=3 -C target-feature=+crt-static file.rs

@@ -1,0 +1,2 @@
+problems: https://projecteuler.net/archives
+sols: https://github.com/luckytoilet/projecteuler-solutions/blob/master/Solutions.md

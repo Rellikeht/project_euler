@@ -1,0 +1,47 @@
+(defun next_col_num (x)
+  (if (eql 0 (mod x 2))
+    (truncate (/ x 2))
+    (+ (* x 3) 1)))
+
+(defun search_longest_v1 (&optional (num 999999) (cur_num num) (glob_max_num num) (glob_max 0) (cur_max 0))
+  (if (eql cur_num 1)
+    (list glob_max_num glob_max)
+    (if (eql (next_col_num num) 1)
+      (progn
+        (if (> (+ cur_max 1) glob_max)
+  	(progn
+  	  (setf glob_max_num cur_num)
+  	  (setf glob_max (+ cur_max 1))))
+        (search_longest_v1 (- cur_num 1) (- cur_num 1) glob_max_num glob_max 0))
+      (search_longest_v1 (next_col_num num) cur_num glob_max_num glob_max (+ cur_max 1)))))
+
+(defun search_longest (&optional (num 999999) (cur_num num) (glob_max (list (list num 0))) (cur_max 0))
+  (if (eql cur_num 1)
+      (return-from search_longest glob_max)
+    (if (eql (next_col_num num) 1)
+      (progn
+        (if (> (+ cur_max 1) (car (cdr (nth (- (length glob_max) 1) glob_max))))
+  	  (setf glob_max (append glob_max (list (list cur_num (+ cur_max 1))))))
+	(search_longest (- cur_num 1) (- cur_num 1) glob_max 0))
+      (search_longest (next_col_num num) cur_num glob_max (+ cur_max 1)))))
+
+(defun sl_la (&optional (num 999999) (cur_num num) (nums (list cur_num)) (cnts (list 0)) (c 0) (cur_nums (list cur_num)))
+  (if (eql cur_num 1)
+    (let ((ct (reduce 'max cnts)))
+      (list (nth (position ct cnts) nums)))
+    (let ((cnum (next_col_num num)))
+      (if (or (member cnum nums) (eql cnum 1))
+	(do ((i 0 (+ i 1)) (c c (- c 1)))
+	  ((eql i (length cur_nums))
+	   (sl_la (- cur_num 1) (- cur_num 1) nums cnts 0))
+	  (setf nums (append nums (car cur_nums)))
+	  (setf cnts c))
+	(sl_la cnum cur_num nums cnts (+ c 1) (append cur_nums cnum))))))
+
+;(format t "~A~%" (search_longest))
+;(format t "~A~%" (next_col_num (read)))
+
+(setf n (read))
+;(format t "~A~%" (time (search_longest_v1 n)))
+;(format t "~A~%" (time (search_longest n)))
+(format t "~A~%" (time (sl_la n)))

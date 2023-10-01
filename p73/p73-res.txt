@@ -1,0 +1,1 @@
+sbcl --noinform --script p73.cl 2> /dev/null > p73-res.txt  14,86s user 0,02s system 99% cpu 14,881 total

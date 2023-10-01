@@ -1,0 +1,33 @@
+*
+!*.*
+!*/
+test/
+perf*
+rust-project.json
+
+# No idea how good that will work
+!t[0-9]*
+!in[!.]*
+!data*
+
+# Oh yeah, never enough of binary formats
+a.out
+*.o
+*.so
+*.hi
+*.cmi
+*.cmo
+*.cmx
+*.cma
+*.pyx
+*.pyc
+
+# vim moment
+*.swp
+*~
+
+# Yes, I'm caching
+problems/*.html
+
+# And special files, no idea how they ended up there
+p61-*.txt

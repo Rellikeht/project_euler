@@ -2,8 +2,13 @@
 type Numt = u64;
 type Rest = u64;
 
+// This should be iterator
 pub fn primes(n: usize) -> Vec<Numt> {
+
+    // This probably up to sqrt of n
+    // And should be in main loop
     let mut prs = Vec::with_capacity((Numt::ilog2(n as Numt)*2+1) as usize);
+
     let n = n+1;
     let mut sieve = Vec::with_capacity(n);
     sieve.resize(n, true);
@@ -37,8 +42,11 @@ pub fn main() {
     let num: usize = nums.parse().unwrap_or(20);
     let prs = primes(num);
     let mut mults = Vec::with_capacity(prs.len());
+
+    // This definitely up to sqrt of n
     mults.resize(prs.len(), 1);
 
+    // Something gere up to sqrt of n probably
     for mut i in 4..(num+1) as Numt {
         // let mut p = 0;
         while i > 1 {
@@ -56,6 +64,7 @@ pub fn main() {
     // println!("{:?}", prs);
     // println!("{:?}", mults);
     let mut result = 1 as Rest;
+    // This multiplication alone is probably not that great
     for m in 0..mults.len() { result *= prs[m].pow(mults[m] as u32) as Rest; }
 
     println!("{}", result);

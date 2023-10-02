@@ -1,9 +1,11 @@
 #!/bin/sh
+
 [ $# -lt 2 ] && \
     echo Give a program and a number && \
     exit 1
 
 PROG="$1"
+
 # if [ ! -x "$PROG" ]
 # then
 #     echo Nonex
@@ -15,6 +17,11 @@ PROG="$1"
 # 
 # echo "$PROG"
 
-echo "$2" | \
-    tr -d '_-' | \
-    xargs /usr/bin/time -lh "$PROG"
+INP=$(echo "$2" | tr -d '_-')
+
+if [ "$(uname)" = "FreeBSD" ]
+then
+        echo "$INP" | xargs /usr/bin/time -lh "$PROG"
+else
+        echo "$INP" | xargs /usr/bin/time -v "$PROG"
+fi

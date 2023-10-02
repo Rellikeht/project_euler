@@ -2,8 +2,11 @@
 type Numt = u64;
 type Rest = u64;
 
-// Now this must be iterator !!
+// This should be iterator
 pub fn primes(n: usize) -> Vec<Numt> {
+
+    // This probably up to sqrt of n
+    // And should be in main loop
 
     let cap = (8*n)/(Numt::ilog2(n as Numt)*5) as usize;
     let mut prs = Vec::with_capacity(cap);
@@ -34,6 +37,7 @@ pub fn primes(n: usize) -> Vec<Numt> {
         if sieve[i] { prs.push(i as Numt); }
     }
 
+    // println!("{} {}\n", cap, prs.len());
     return prs;
 }
 
@@ -41,21 +45,36 @@ pub fn main() {
     let nums = std::env::args().nth(1).unwrap_or("20".to_string());
     let num: usize = nums.parse().unwrap_or(20);
     let prs = primes(num);
+    let mut mults = Vec::with_capacity(prs.len());
 
+    // This definitely up to sqrt of n
+    mults.resize(prs.len(), 1);
+
+    // Something gere up to sqrt of n probably
+    for mut i in 4..(num+1) as Numt {
+        // let mut p = 0;
+        // for j in 0..prs.len() {
+        let mut j = 0;
+
+        while i > 1 {
+            let mut m = 0;
+
+            while i % prs[j] == 0 {
+                i /= prs[j];
+                m += 1;
+            }
+
+            mults[j] = Numt::max(mults[j], m);
+            j += 1;
+        }
+    }
+
+    // println!("{:?}", prs);
+    // println!("{:?}", mults);
     let mut result = 1 as Rest;
-    let mut log = 2;
-    let mut p = 0;
-
-    while log > 1 && p < prs.len() {
-        log = (num as Rest).ilog(prs[p]);
-        result *= Rest::pow(prs[p], log);
-        p += 1;
-    }
-
-    while p < prs.len() {
-        result *= prs[p];
-        p += 1;
-    }
+    // This multiplication alone is probably not that great
+    for m in 0..mults.len() { result *= prs[m].pow(mults[m] as u32) as Rest; }
 
     println!("{}", result);
+    // println!("{:?}", prs);
 }

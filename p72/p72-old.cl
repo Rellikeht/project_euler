@@ -41,4 +41,4 @@
 
 (declaim (inline reduced))
 
-(format t "~A~%" (count_fractions 0 1))
+(format t "~A~%" (- (count_fractions 0 1) 1))

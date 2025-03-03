@@ -1,4 +1,4 @@
-#!/bin/sbcl --script
+#!/usr/bin/env -S sbcl --script
 
 (setf max_d 12000)
 (setf maxf (/ 1 2))
@@ -9,10 +9,10 @@
     ((gen_num_list
        (down up lst)
        (if (> down up)
-	 lst
-	 (gen_num_list down
-		       (- up stp)
-		       (cons up lst)))))
+     lst
+     (gen_num_list down
+               (- up stp)
+               (cons up lst)))))
     (gen_num_list down up '())))
 
 (defun reduced (n d)
@@ -21,9 +21,9 @@
 (defun test (n d)
   (let ((f (/ n d)))
     (if (and
-	  (reduced n d)
-	  (< minf f)
-	  (> maxf f))
+      (reduced n d)
+      (< minf f)
+      (> maxf f))
       t
       nil)))
 
@@ -38,9 +38,9 @@
   (if (null denoms)
     cnt
     (let ((fd (car denoms))
-	  (rd (cdr denoms)))
+      (rd (cdr denoms)))
       (if (test nmr fd)
-	(cnt_fracs (+ cnt 1) nmr rd)
-	(cnt_fracs cnt nmr rd)))))
+    (cnt_fracs (+ cnt 1) nmr rd)
+    (cnt_fracs cnt nmr rd)))))
 
 (format t "~A~%" (count_fractions 0 1))
